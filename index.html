@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bio Siêu Cấp VIP</title>
+  <title>吕成光</title>
   <style>
     * {margin:0;padding:0;box-sizing:border-box;}
     body {
@@ -46,7 +46,7 @@
     .particle{position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);animation:moveParticles 20s infinite linear;}
     @keyframes moveParticles{from{transform:translateY(0) rotate(0);}to{transform:translateY(-2000px) rotate(360deg);}}
 
-    /* Player góc phải dưới */
+    
     .audio-player {
       position: fixed;
       bottom: 20px;
@@ -72,7 +72,7 @@
     }
     .audio-player button:hover{transform:scale(1.05);}
 
-    /* Visualizer */
+    
     #visualizer {
       width: 200px;
       height: 60px;
@@ -91,9 +91,9 @@
 <body>
   <div class="bg-particles"></div>
   <div class="bio-card">
-    <img src="https://i.ibb.co/5GzXkwq/avatar.png" alt="Avatar" class="bio-avatar">
-    <h1 class="bio-name">Siêu Cấp VIP</h1>
-    <p class="bio-desc">Bio lung linh, tuyết rơi, hạt sáng, nhạc chill 🎶</p>
+   <img src="avatar.jpg" alt="avatar" class="bio-avatar">
+    <h1 class="bio-name">吕成光</h1>
+    <p class="bio-desc">🎶 cuoc doi nay , k ai cho ai cai gi het...</p>
     <div class="bio-links">
       <a href="#">🐦</a>
       <a href="#">📸</a>
@@ -101,7 +101,7 @@
     </div>
   </div>
 
-  <!-- Player góc phải -->
+  
   <div class="audio-player">
     <div id="visualizer"></div>
     <audio id="bg-music" loop>
@@ -109,7 +109,7 @@
     </audio>
     <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5">
     <br>
-    <button id="play-btn">▶ Play / Pause</button>
+    <button id="play-btn">▶ Play </button>
   </div>
 
   <script>
@@ -145,16 +145,16 @@
     playBtn.addEventListener("click",()=>{
       if(audio.paused){
         audio.play();
-        playBtn.textContent="⏸ Pause";
+        playBtn.textContent="⏸ dừng";
         initVisualizer();
       } else {
         audio.pause();
-        playBtn.textContent="▶ Play";
+        playBtn.textContent="▶ tiếp tục";
       }
     });
     volume.addEventListener("input",()=>{audio.volume=volume.value;});
 
-    // Visualizer setup
+    
     const visualizer=document.getElementById("visualizer");
     const barCount=25;
     for(let i=0;i<barCount;i++){
