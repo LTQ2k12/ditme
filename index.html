@@ -46,7 +46,6 @@
     .particle{position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);animation:moveParticles 20s infinite linear;}
     @keyframes moveParticles{from{transform:translateY(0) rotate(0);}to{transform:translateY(-2000px) rotate(360deg);}}
 
-    
     .audio-player {
       position: fixed;
       bottom: 20px;
@@ -62,17 +61,7 @@
       cursor: pointer;
       accent-color: #ff00f2;
     }
-    .audio-player button {
-      margin-top:10px;
-      padding:6px 16px;
-      border:none;border-radius:20px;
-      background:linear-gradient(45deg,#00f5ff,#ff00f2);
-      color:#fff;font-weight:bold;cursor:pointer;
-      transition:all .3s;
-    }
-    .audio-player button:hover{transform:scale(1.05);}
 
-    
     #visualizer {
       width: 200px;
       height: 60px;
@@ -101,15 +90,12 @@
     </div>
   </div>
 
-  
   <div class="audio-player">
     <div id="visualizer"></div>
-    <audio id="bg-music" loop>
+    <audio id="bg-music" autoplay loop>
       <source src="your-music.mp3" type="audio/mpeg">
     </audio>
     <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5">
-    <br>
-    <button id="play-btn">▶ Play </button>
   </div>
 
   <script>
@@ -140,21 +126,10 @@
 
     const audio=document.getElementById("bg-music");
     const volume=document.getElementById("volume-control");
-    const playBtn=document.getElementById("play-btn");
 
-    playBtn.addEventListener("click",()=>{
-      if(audio.paused){
-        audio.play();
-        playBtn.textContent="⏸ dừng";
-        initVisualizer();
-      } else {
-        audio.pause();
-        playBtn.textContent="▶ tiếp tục";
-      }
-    });
     volume.addEventListener("input",()=>{audio.volume=volume.value;});
 
-    
+    // Visualizer setup
     const visualizer=document.getElementById("visualizer");
     const barCount=25;
     for(let i=0;i<barCount;i++){
@@ -163,6 +138,7 @@
       bar.style.height="5px";
       visualizer.appendChild(bar);
     }
+
     let audioCtx, analyser, source, dataArray;
     function initVisualizer(){
       if(audioCtx) return;
@@ -176,6 +152,7 @@
       analyser.connect(audioCtx.destination);
       draw();
     }
+
     function draw(){
       requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
@@ -185,6 +162,9 @@
         bars[i].style.height=value+"px";
       }
     }
+
+    // Khởi chạy visualizer khi nhạc bắt đầu
+    audio.addEventListener("play",()=>{initVisualizer();});
   </script>
 </body>
 </html>
