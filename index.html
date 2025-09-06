@@ -1,39 +1,139 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>吕成光</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吕成光</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{height:100vh;width:100vw;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,rgba(0,0,0,0.9),rgba(50,50,50,0.7));overflow:hidden;color:#fff;}
+
+/* Intro screen */
+.intro{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#000,#222);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10000;text-align:center;}
+.intro h1{font-size:2.5em;margin-bottom:20px;background:linear-gradient(90deg,#00f5ff,#ff00f2,#ffeb3b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 5s infinite linear;}
+.intro button{padding:12px 30px;font-size:1.2em;border:none;border-radius:30px;background:linear-gradient(45deg,#00f5ff,#ff00f2);color:#fff;cursor:pointer;font-weight:bold;transition:all .3s ease;}
+.intro button:hover{transform:scale(1.1);}
+@keyframes hue{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
+
+/* Snow + Bio */
+.snowflake{position:fixed;top:-10px;z-index:9999;color:#fff;font-size:1em;user-select:none;pointer-events:none;animation-name:fall;animation-timing-function:linear;}
+@keyframes fall{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(100vh);opacity:0;}}
+.bio-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:450px;padding:40px;border-radius:25px;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);box-shadow:0 0 40px rgba(255,255,255,0.2);text-align:center;animation:float 6s ease-in-out infinite;display:none;}
+@keyframes float{0%,100%{transform:translate(-50%,-50%) translateY(0);}50%{transform:translate(-50%,-50%) translateY(-20px);}}
+.bio-avatar{width:150px;height:150px;border-radius:50%;border:4px solid rgba(255,255,255,0.7);margin-bottom:20px;box-shadow:0 0 20px rgba(255,255,255,0.5);animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(255,255,255,0.5);}50%{box-shadow:0 0 40px rgba(255,255,255,0.9);}}
+.bio-name{font-size:2em;font-weight:700;margin-bottom:10px;background:linear-gradient(90deg,#00f5ff,#ff00f2,#ffeb3b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 5s infinite linear;}
+.bio-desc{font-size:1.1em;opacity:0.8;margin-bottom:25px;line-height:1.6;}
+.bio-links{display:flex;justify-content:center;gap:20px;}
+.bio-links a{display:inline-block;width:50px;height:50px;line-height:50px;text-align:center;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);color:#fff;font-size:1.5em;text-decoration:none;transition:all .3s ease;}
+.bio-links a:hover{background:rgba(255,255,255,0.3);transform:scale(1.2) rotate(10deg);}
+.bg-particles{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-1;}
+.particle{position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);animation:moveParticles 20s infinite linear;}
+@keyframes moveParticles{from{transform:translateY(0) rotate(0);}to{transform:translateY(-2000px) rotate(360deg);}}
+
+/* Audio */
+.audio-player{position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.15);padding:10px 15px;border-radius:15px;backdrop-filter:blur(10px);display:none;}
+.audio-player input[type=range]{width:150px;cursor:pointer;accent-color:#ff00f2;}
+</style>
 </head>
 <body>
-  <!-- Intro -->
-  <div class="intro" id="intro">
-    <h1>hello mấy a zai</h1>
-    <button id="enterBtn">vô bio e nào</button>
-  </div>
 
-  <!-- Bio card -->
-  <div class="bg-particles"></div>
-  <div class="bio-card" id="bioCard">
-    <img src="avatar.jpg" alt="avatar" class="bio-avatar">
-    <h1 class="bio-name">吕成光</h1>
-    <p class="bio-desc">🎶 cuoc doi nay , k ai cho ai cai gi het...</p>
-    <div class="bio-links">
-      <a href="https://www.youtube.com/@LTQ-tool">🔴</a>
-      <a href="https://hellonhaa.vercel.app/">📸</a>
-      <a href="https://discord.gg/vjUWdT3aVT">💬</a>
-    </div>
-  </div>
+<!-- Intro screen -->
+<div class="intro" id="intro">
+  <h1>hello mấy a zai</h1>
+  <button id="enterBtn">vô bio e nào</button>
+</div>
 
-  <!-- Audio -->
-  <div class="audio-player" id="audioPlayer">
-    <audio id="bg-music" loop>
-      <source src="your-music.mp3" type="audio/mpeg">
-    </audio>
-    <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5">
+<!-- Bio card -->
+<div class="bg-particles"></div>
+<div class="bio-card" id="bioCard">
+  <img src="avatar.jpg" alt="avatar" class="bio-avatar">
+  <h1 class="bio-name">吕成光</h1>
+  <p class="bio-desc">🎶 cuoc doi nay , k ai cho ai cai gi het...</p>
+  <div class="bio-links">
+    <a href="https://www.youtube.com/@LTQ-tool">🔴</a>
+    <a href="https://hellonhaa.vercel.app/">📸</a>
+    <a href="https://discord.gg/vjUWdT3aVT">💬</a>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<!-- Audio -->
+<div class="audio-player" id="audioPlayer">
+  <audio id="bg-music" loop>
+    <source src="your-music.mp3" type="audio/mpeg">
+  </audio>
+  <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5">
+</div>
+
+<!-- Rate-limit overlay -->
+<div id="rateOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:99999;color:red;font-size:3rem;display:flex;align-items:center;justify-content:center;font-family:sans-serif;">
+  🚫 ERROR 429: Too Many Requests
+</div>
+
+<script>
+// --- Elements ---
+const intro = document.getElementById("intro");
+const bioCard = document.getElementById("bioCard");
+const audioPlayer = document.getElementById("audioPlayer");
+const audio = document.getElementById("bg-music");
+const volume = document.getElementById("volume-control");
+const enterBtn = document.getElementById("enterBtn");
+const rateOverlay = document.getElementById("rateOverlay");
+
+// --- Snowflake ---
+function createSnowflake(){
+  const snowflake=document.createElement("div");
+  snowflake.classList.add("snowflake");
+  snowflake.textContent="❄";
+  snowflake.style.left=Math.random()*window.innerWidth+"px";
+  snowflake.style.fontSize=Math.random()*20+10+"px";
+  snowflake.style.animationDuration=Math.random()*5+5+"s";
+  document.body.appendChild(snowflake);
+  setTimeout(()=>{snowflake.remove();},10000);
+}
+setInterval(createSnowflake,100);
+
+// --- Particles ---
+const particleContainer=document.querySelector('.bg-particles');
+for(let i=0;i<150;i++){
+  const particle=document.createElement('div');
+  particle.classList.add('particle');
+  const size=Math.random()*8+2;
+  particle.style.width=size+'px';
+  particle.style.height=size+'px';
+  particle.style.left=Math.random()*window.innerWidth+'px';
+  particle.style.top=Math.random()*window.innerHeight+'px';
+  particle.style.animationDuration=Math.random()*20+10+'s';
+  particleContainer.appendChild(particle);
+}
+
+// --- Volume control ---
+volume.addEventListener("input",()=>{audio.volume=volume.value;});
+
+// --- Rate-limit ---
+let requestCount = 0;
+let isBlocked = localStorage.getItem("isBlocked") === "true";
+setInterval(()=>{requestCount=0;},1000);
+function blockUser(){
+  isBlocked=true;
+  localStorage.setItem("isBlocked","true");
+  rateOverlay.style.display="flex";
+}
+if(isBlocked) blockUser();
+function sendRequest(){
+  if(isBlocked) return;
+  requestCount++;
+  if(requestCount>10) blockUser();
+}
+
+// --- Intro -> Bio ---
+enterBtn.addEventListener("click", ()=>{
+  sendRequest();
+  intro.style.display="none";
+  bioCard.style.display="block";
+  audioPlayer.style.display="block";
+  audio.play();
+});
+</script>
 </body>
 </html>
