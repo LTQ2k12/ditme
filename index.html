@@ -143,7 +143,7 @@
       particleContainer.appendChild(particle);
     }
 
-    // Intro -> Bio
+    // Intro -> Bio + Auto play music
     const intro=document.getElementById("intro");
     const bioCard=document.getElementById("bioCard");
     const audioPlayer=document.getElementById("audioPlayer");
@@ -155,10 +155,30 @@
       bioCard.style.display="block";
       audioPlayer.style.display="block";
       audio.play();
+      sendRequest(); // demo rate-limit mỗi lần bấm vào bio
     });
 
-    // Volume control
     volume.addEventListener("input",()=>{audio.volume=volume.value;});
+
+    // --- RATE-LIMIT GIẢ LẬP ---
+    let requestCount = 0;
+    let isBlocked = false;
+
+    setInterval(() => { requestCount = 0; }, 1000);
+
+    function sendRequest() {
+      if(isBlocked){
+        document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:3rem;color:red;font-family:sans-serif">🚫 ERROR 429: Too Many Requests</div>`;
+        return;
+      }
+      requestCount++;
+      if(requestCount > 10){
+        isBlocked = true;
+        document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:3rem;color:red;font-family:sans-serif">🚫 ERROR 429: Too Many Requests</div>`;
+      } else {
+        console.log("Request thành công");
+      }
+    }
   </script>
 </body>
 </html>
