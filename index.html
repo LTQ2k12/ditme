@@ -92,40 +92,35 @@ const audio=document.getElementById("bg-music");
 const volume=document.getElementById("volume-control");
 volume.addEventListener("input",()=>{audio.volume=volume.value;});
 
-// Rate-limit
+// Rate-limit variables
 let requestCount=0;
 let isBlocked=false;
 let unblockTimeout;
 const rateOverlay=document.getElementById("rateOverlay");
-setInterval(()=>{requestCount=0;},1000);
 
-function blockUser(){
-  isBlocked=true;
-  rateOverlay.style.display="flex";
-}
-
-function unblockUser(){
-  isBlocked=false;
-  rateOverlay.style.display="none";
-  requestCount=0;
-}
-
-function sendRequest(){
+// Simulate request (call this when actual requests happen)
+function simulateRequest(){
   if(isBlocked) return;
   requestCount++;
-  if(requestCount>1000) blockUser();
-
-  // Reset unblock timer
+  if(requestCount>1000){
+    isBlocked=true;
+    rateOverlay.style.display="flex";
+  }
+  // Reset unblock timer after 10s no requests
   clearTimeout(unblockTimeout);
-  unblockTimeout=setTimeout(()=>{unblockUser();},10000);
+  unblockTimeout=setTimeout(()=>{
+    isBlocked=false;
+    requestCount=0;
+    rateOverlay.style.display="none";
+  },10000);
 }
 
 // Intro -> Bio
 const intro=document.getElementById("intro");
 const bioCard=document.getElementById("bioCard");
 const audioPlayer=document.getElementById("audioPlayer");
+
 document.getElementById("enterBtn").addEventListener("click", ()=>{
-  sendRequest();
   intro.style.display="none";
   bioCard.style.display="block";
   audioPlayer.style.display="block";
